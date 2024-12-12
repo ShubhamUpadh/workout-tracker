@@ -15,8 +15,7 @@ public class users {
 
     public users() {}
 
-    public users(Long id, String username, String password) {
-        this.id = id;
+    public users(String username, String password) {
         this.username = username;
         this.password = password;
     }
@@ -43,5 +42,14 @@ public class users {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "users{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
