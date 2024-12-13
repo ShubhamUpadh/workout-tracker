@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GetWorkoutSetService {
@@ -58,7 +60,45 @@ public class GetWorkoutSetService {
                 workoutSetRequests.add(currRequest);
             }
         }
+        workoutSetRequests.sort(Comparator.comparing(WorkoutSetRequest::getDate)
+                .thenComparing(WorkoutSetRequest::getUser_id)
+                .thenComparing(WorkoutSetRequest::getExercise_id)
+                .thenComparing(WorkoutSetRequest::getSet_no));
         return workoutSetRequests;
 
+    }
+
+    public List<WorkoutSetRequest> getAllWorkoutsByUserId(int id) {
+        List<workout_sets> workoutSetsList =  workoutSetRepository.findAll().stream().
+                filter(WorkoutSet -> WorkoutSet.getUser().getId() == id).toList();
+
+        List<performances> performancesList = performanceRepository.findAll();
+
+        List<WorkoutSetRequest> workoutSetRequests = new ArrayList<>();
+
+        for (performances performance : performancesList){
+            Optional<workout_sets> matchingWorkoutSet = workoutSetsList.stream()
+                    .filter(workoutSet -> workoutSet.getId() == performance.getWorkout_Sets().getId())
+                    .findFirst();
+
+            if (matchingWorkoutSet.isPresent()){
+                workout_sets workoutSets = matchingWorkoutSet.get();
+                WorkoutSetRequest currRequest = new WorkoutSetRequest();
+
+                currRequest.setUser_id(workoutSets.getUser().getId());
+                currRequest.setExercise_id(workoutSets.getExercise().getId());
+                currRequest.setDate(workoutSets.getDate());
+                currRequest.setSet_no(performance.getSet_no());
+                currRequest.setWeight(performance.getWeight());
+                currRequest.setWeight(performance.getWeight());
+
+                workoutSetRequests.add(currRequest);
+            }
+        }
+        workoutSetRequests.sort(Comparator.comparing(WorkoutSetRequest::getDate)
+                .thenComparing(WorkoutSetRequest::getUser_id)
+                .thenComparing(WorkoutSetRequest::getExercise_id)
+                .thenComparing(WorkoutSetRequest::getSet_no));
+        return workoutSetRequests;
     }
 }

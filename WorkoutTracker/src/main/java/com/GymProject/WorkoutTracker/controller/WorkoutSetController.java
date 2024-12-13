@@ -5,10 +5,7 @@ import com.GymProject.WorkoutTracker.model.workout_sets;
 import com.GymProject.WorkoutTracker.service.CreateWorkoutSetService;
 import com.GymProject.WorkoutTracker.service.GetWorkoutSetService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,4 +27,10 @@ public class WorkoutSetController {
     public List<WorkoutSetRequest> getWorkoutSet(){
         return getWorkoutSetService.getAllWorkouts();
     }
+
+    @GetMapping("/getWorkoutSetByUser/{id}")
+    public List<WorkoutSetRequest> getWorkoutSetByUserId(@PathVariable int id){
+        return getWorkoutSetService.getAllWorkoutsByUserId(id);
+    }
+
 }
