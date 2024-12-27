@@ -4,6 +4,8 @@ import com.GymProject.WorkoutTracker.dto.ExerciseRequest;
 import com.GymProject.WorkoutTracker.model.exercises;
 import com.GymProject.WorkoutTracker.service.CreateExercisesService;
 import com.GymProject.WorkoutTracker.service.ExercisesService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,9 @@ public class ExerciseController {
     @Autowired
     ExercisesService exercisesService;
 
+
+    @Operation(summary = "Get all workouts", description = "Retrieve all workout details")
+    @ApiResponse(responseCode = "200", description = "Successfully retrieved workouts")
     @GetMapping("/exercises")
     public List<exercises> getExercises(){
 
@@ -30,6 +35,8 @@ public class ExerciseController {
     @Autowired
     CreateExercisesService createExercisesService;
 
+    @Operation(summary = "Add an exercise ", description = "Inserts data into exercises and muscle_targeted tables")
+    @ApiResponse(responseCode = 200, description = "Succesfully Added Exercises")
     @PostMapping("/exercises")
     public exercises addExercises(@RequestBody ExerciseRequest exerciseRequest){
         System.out.println("Received" + exerciseRequest.toString());
