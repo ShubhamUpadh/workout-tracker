@@ -36,13 +36,14 @@ public class ExerciseController {
     CreateExercisesService createExercisesService;
 
     @Operation(summary = "Add an exercise ", description = "Inserts data into exercises and muscle_targeted tables")
-    @ApiResponse(responseCode = 200, description = "Succesfully Added Exercises")
+    @ApiResponse(responseCode = "200", description = "Successfully Added Exercises")
     @PostMapping("/exercises")
     public exercises addExercises(@RequestBody ExerciseRequest exerciseRequest){
         System.out.println("Received" + exerciseRequest.toString());
         return createExercisesService.createExercises(exerciseRequest);
     }
-
+    @Operation(summary = "Add multiple exercises", description = "Inserts multiple entries into exercises and muscle_targeted table")
+    @ApiResponse(responseCode = "200", description = "Successfully added data to the tables")
     @PostMapping("/exercisesList")
     public List<exercises> addMultipleExercises(@RequestBody List<ExerciseRequest> exerciseRequests){
         return createExercisesService.createExercisesList(exerciseRequests);
