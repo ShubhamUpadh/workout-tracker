@@ -1,9 +1,14 @@
 package com.GymProject.WorkoutTracker.model;
 
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 @Entity
+@Table(name = "exercise_schedules")
 public class exercise_schedules {
+
+//    @Autowired
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +23,12 @@ public class exercise_schedules {
     private schedules Schedules;
 
     private int sets;
+
+    public exercise_schedules(exercises exercises, schedules schedules, int sets) {
+        Exercises = exercises;
+        Schedules = schedules;
+        this.sets = sets;
+    }
 
     public exercise_schedules(int id, exercises exercises, schedules schedules, int sets) {
         this.id = id;

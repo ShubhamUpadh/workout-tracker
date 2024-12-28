@@ -1,11 +1,15 @@
 package com.GymProject.WorkoutTracker.model;
 import com.GymProject.WorkoutTracker.model.exercise_schedules;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 @Entity
 public class schedules {
+
+//    @Autowired
+//    exercise_schedules exerciseSchedules;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +27,19 @@ public class schedules {
     private String schedule_name;
 
     public schedules() {
+    }
+
+    public schedules(users users, String day_of_week, String schedule_name) {
+        Users = users;
+        this.day_of_week = day_of_week;
+        this.schedule_name = schedule_name;
+    }
+
+    public schedules(int id, users users, String day_of_week, String schedule_name) {
+        this.id = id;
+        Users = users;
+        this.day_of_week = day_of_week;
+        this.schedule_name = schedule_name;
     }
 
     public schedules(int id, users users, String day_of_week,
@@ -80,7 +97,6 @@ public class schedules {
                 "id=" + id +
                 ", Users=" + Users +
                 ", day_of_week='" + day_of_week + '\'' +
-                ", exercise_schedules=" + exercise_schedules +
                 ", schedule_name='" + schedule_name + '\'' +
                 '}';
     }
