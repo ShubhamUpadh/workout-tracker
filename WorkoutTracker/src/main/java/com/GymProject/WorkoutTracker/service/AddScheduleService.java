@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 public class AddScheduleService {
 
-
     @Autowired
     UserService userService;
 
@@ -61,24 +60,21 @@ public class AddScheduleService {
             return new schedules(null,"User Not Found",
                     "For this user id -" + request.getUser_id());
         }
+
         // 3. Ensure that the combination of user_id, day_of_Week and schedule_name is unique
 
 
         // 4. Using the user object, create an entry in schedules table
-        schedules Schedules = new schedules();
-        Schedules.setUsers(usersOptional.get());
-        Schedules.setDay_of_week(request.getDay_of_week());
-        Schedules.setSchedule_name(request.getSchedule_name());
+        schedules newSchedule = new schedules(usersOptional.get(), request.getDay_of_week(), request.getSchedule_name());
 
-        schedules savedSchedule = schedulesRepository.save(Schedules);
+        schedules savedSchedule = schedulesRepository.save(newSchedule);
 
         // 5. Using the id of the savedSchedules, create entries in exercise_Schedule_table
         List<exercise_schedules> exerciseSchedulesList = new ArrayList<>();
         for (int i = 0; i < request.getSets().size(); i++){
-            exercise_schedules exerciseSchedules = new exercise_schedules();
-            exerciseSchedules.setSets(request.getSets().get(i));
-            exerciseSchedules.setSchedules(savedSchedule);
-            exerciseSchedules.setExercises(exercisesList.get(i));
+            exercise_schedules exerciseSchedules = new exercise_schedules(
+                    exercisesList.get(i), savedSchedule, request.getSets().get(i)
+                        );
             exerciseSchedulesRepository.save(exerciseSchedules);
         }
 

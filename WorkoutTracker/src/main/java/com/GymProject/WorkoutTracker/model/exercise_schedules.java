@@ -25,15 +25,8 @@ public class exercise_schedules {
     private int sets;
 
     public exercise_schedules(exercises exercises, schedules schedules, int sets) {
-        Exercises = exercises;
-        Schedules = schedules;
-        this.sets = sets;
-    }
-
-    public exercise_schedules(int id, exercises exercises, schedules schedules, int sets) {
-        this.id = id;
-        Exercises = exercises;
-        Schedules = schedules;
+        this.Exercises = exercises;
+        this.Schedules = schedules;
         this.sets = sets;
     }
 
@@ -56,14 +49,6 @@ public class exercise_schedules {
     }
 
     public exercise_schedules() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public exercises getExercises() {
